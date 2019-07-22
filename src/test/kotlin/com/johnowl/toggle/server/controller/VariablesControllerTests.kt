@@ -1,6 +1,5 @@
 package com.johnowl.toggle.server.controller
 
-import com.johnowl.toggle.server.domain.FeatureToggle
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.junit.Test
@@ -37,7 +36,7 @@ class VariablesControllerTests {
 
         testRestTemplate.postForEntity("/variables/user999", variables, String::class.java)
         val response = testRestTemplate.getForEntity("/variables/user999", String::class.java)
-        
+
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
