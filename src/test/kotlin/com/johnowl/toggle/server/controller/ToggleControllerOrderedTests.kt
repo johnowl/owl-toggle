@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class ToggleControllerTests {
+class ToggleControllerOrderedTests {
 
 	@Autowired
 	lateinit var testRestTemplate: TestRestTemplate
