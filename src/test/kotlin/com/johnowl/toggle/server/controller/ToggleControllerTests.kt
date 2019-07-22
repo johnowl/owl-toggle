@@ -1,4 +1,4 @@
-package com.johnowl.toggle.server
+package com.johnowl.toggle.server.controller
 
 
 import com.johnowl.toggle.server.domain.FeatureToggle
@@ -21,7 +21,7 @@ import org.springframework.test.context.junit4.SpringRunner
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("test")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class OwlToggleServerApplicationTests {
+class ToggleControllerTests {
 
 	@Autowired
 	lateinit var testRestTemplate: TestRestTemplate
