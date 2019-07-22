@@ -65,5 +65,31 @@ class ToggleControllerTests {
 		assertThat(response.body, equalTo(expectedJson))
 	}
 
+	@Test
+	fun `005 should return status 200 and feature toggle list in body when get all`() {
+		val expectedJson = "[{\"toggleId\":\"my_toggle\",\"enabled\":false,\"rules\":\"true\"}]"
+
+		val response = testRestTemplate.getForEntity("/toggles/", String::class.java)
+		assertThat(response.statusCode, equalTo(HttpStatus.OK))
+		assertThat(response.body, equalTo(expectedJson))
+	}
+
+	@Test
+	fun `006 should return status 200 and feature toggle in body when delete toggle by id`() {
+		val expectedJson = "{\"toggleId\":\"my_toggle\",\"enabled\":false,\"rules\":\"true\"}"
+
+		val response = testRestTemplate.exchange("/toggles/my_toggle", HttpMethod.DELETE, null, String::class.java)
+		assertThat(response.statusCode, equalTo(HttpStatus.OK))
+		assertThat(response.body, equalTo(expectedJson))
+	}
+
+	@Test
+	fun `007 should return status 404 and json error in body when try to delete non existing toggle`() {
+		val expectedJson = "{\"code\":\"toggle_not_found\",\"message\":\"Feature toggle not found.\"}"
+
+		val response = testRestTemplate.exchange("/toggles/my_toggle999", HttpMethod.DELETE, null, String::class.java)
+		assertThat(response.statusCode, equalTo(HttpStatus.NOT_FOUND))
+		assertThat(response.body, equalTo(expectedJson))
+	}
 
 }
