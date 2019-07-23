@@ -24,6 +24,8 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     compile(files("libs/owl-rules-1.1.0.jar"))
     compile("com.github.h0tk3y.betterParse:better-parse-jvm:0.4.0-alpha-3")
+    compile("io.springfox:springfox-swagger2:2.9.2")
+    compile("io.springfox:springfox-swagger-ui:2.9.2")
 }
 
 tasks.withType<KotlinCompile> {
