@@ -1,0 +1,295 @@
+{
+	"info": {
+		"_postman_id": "29f3c9f6-0174-4ae7-a0a6-92196efaeaa1",
+		"name": "Toggle Server",
+		"description": "Toggle server requests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Feature Toggle CRUD",
+			"item": [
+				{
+					"name": "Get feature toggle by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/toggles/my_toggle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"toggles",
+								"my_toggle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all feature toggles",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8000/toggles/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"toggles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create new feature toggle",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"toggleId\": \"details_v2\",\n\t\"enabled\": true,\n\t\"rules\": \"Number(version) > 0\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/toggles/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"toggles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update feature toggle",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"toggleId\": \"my_toggle\",\n\t\"enabled\": true,\n\t\"rules\": \"Number(version) > 20\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/toggles/my_toggle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"toggles",
+								"my_toggle"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete feature toggle by id",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/toggles/my_toggle999",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"toggles",
+								"my_toggle999"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "d51aaca5-1e7a-4c7f-8fb2-b7eeb0940096",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c33d9ae2-7995-49da-acfc-e2ebe558e3eb",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Variables",
+			"item": [
+				{
+					"name": "Add variables by userId",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"John\",\n    \"roles\": [\n        \"beta\",\n        \"admin\"\n    ],\n    \"salary\": 100000,\n    \"version\": 10\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/variables/user123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"variables",
+								"user123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get variables by userId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/variables/user123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"variables",
+								"user123"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Feature Toggle Check",
+			"item": [
+				{
+					"name": "Check feature toggle by toggle id and variables",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"version\": 21\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8000/toggles/my_toggle/check",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"toggles",
+								"my_toggle",
+								"check"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check feature toggle by toggle id and user id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8000/toggles/my_toggle/check/user123",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"toggles",
+								"my_toggle",
+								"check",
+								"user123"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
