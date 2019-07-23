@@ -6,9 +6,14 @@ import org.springframework.stereotype.Service
 class FeatureToggleService {
 
     private val toggleRepository: ToggleRepository
+    private val rulesEngineService: RulesEngineService
+    private val variablesService: VariablesService
 
-    constructor(toggleRepository: ToggleRepository) {
+    constructor(toggleRepository: ToggleRepository, rulesEngineService: RulesEngineService,
+                variablesService: VariablesService) {
         this.toggleRepository = toggleRepository
+        this.rulesEngineService = rulesEngineService
+        this.variablesService = variablesService
     }
 
     fun getById(toggleId: String) = toggleRepository.getById(toggleId) ?: throw FeatureToggleNotFoundException()
@@ -43,5 +48,22 @@ class FeatureToggleService {
         return toggle
     }
 
+    fun check(toggleId: String, variables: Map<String, Any>): Boolean {
+
+        val toggle = this.getById(toggleId)
+
+        if(!toggle.enabled)
+            return false
+
+        if(toggle.rules.isEmpty())
+            return toggle.enabled
+
+        return rulesEngineService.check(toggle.rules, variables)
+    }
+
+    fun check(toggleId: String, userId: String): Boolean {
+        val variables = variablesService.getByUserId(userId)
+        return check(toggleId, variables)
+    }
 
 }

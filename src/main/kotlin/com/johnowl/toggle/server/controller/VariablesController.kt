@@ -22,7 +22,7 @@ class VariablesController {
 
     @GetMapping("/{userId}")
     fun add(@PathVariable("userId") userId: String) : ResponseEntity<Map<String, Any>> {
-        return ResponseEntity(service.getBySessionId(userId), HttpStatus.OK)
+        return ResponseEntity(service.getByUserId(userId), HttpStatus.OK)
     }
 
 }

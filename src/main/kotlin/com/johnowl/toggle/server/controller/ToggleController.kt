@@ -43,5 +43,13 @@ class ToggleController {
         return ResponseEntity(toggleService.delete(toggleId), HttpStatus.OK)
     }
 
+    @PostMapping("/{toggleId}/check")
+    fun add(@PathVariable("toggleId") toggleId: String, @RequestBody variables: Map<String, Any>) : ResponseEntity<Boolean> {
+        return ResponseEntity(toggleService.check(toggleId, variables), HttpStatus.OK)
+    }
 
+    @GetMapping("/{toggleId}/check/{userId}")
+    fun add(@PathVariable("toggleId") toggleId: String, @PathVariable("userId") userId: String) : ResponseEntity<Boolean> {
+        return ResponseEntity(toggleService.check(toggleId, userId), HttpStatus.OK)
+    }
 }
