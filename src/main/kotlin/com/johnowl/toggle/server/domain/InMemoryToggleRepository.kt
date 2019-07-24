@@ -1,9 +1,11 @@
 package com.johnowl.toggle.server.domain
 
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Repository
 import java.util.concurrent.ConcurrentHashMap
 
 @Repository
+@Profile("test", "dev")
 class InMemoryToggleRepository : ToggleRepository {
 
     private val db = ConcurrentHashMap<String, FeatureToggle>()
