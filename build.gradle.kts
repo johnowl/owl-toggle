@@ -24,6 +24,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     runtimeOnly("org.postgresql:postgresql")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     compile(files("libs/owl-rules-1.1.0.jar"))
     compile("com.github.h0tk3y.betterParse:better-parse-jvm:0.4.0-alpha-3")
