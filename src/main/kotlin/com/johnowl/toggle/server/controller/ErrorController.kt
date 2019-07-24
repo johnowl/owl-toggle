@@ -5,12 +5,10 @@ import com.johnowl.toggle.server.domain.FeatureToggleNotFoundException
 import com.johnowl.toggle.server.domain.VariablesNotFoundException
 import io.swagger.annotations.ApiModel
 import org.slf4j.LoggerFactory
-import org.springframework.boot.logging.LogLevel
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
-import java.util.logging.Logger
 
 @ApiModel
 data class Error(val code: String, val message: String)
@@ -55,5 +53,4 @@ class ErrorController {
                 errorMessage),
                 HttpStatus.INTERNAL_SERVER_ERROR)
     }
-
 }

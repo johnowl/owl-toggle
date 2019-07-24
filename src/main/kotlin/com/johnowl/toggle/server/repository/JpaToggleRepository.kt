@@ -20,5 +20,4 @@ class JpaToggleRepository : ToggleRepository {
     override fun getAll(): List<FeatureToggle> = jpaToggleRepositoryAdapter.findAll()
     override fun update(toggle: FeatureToggle) = jpaToggleRepositoryAdapter.save(toggle)
     override fun delete(toggleId: String) = jpaToggleRepositoryAdapter.deleteById(toggleId)
-
 }

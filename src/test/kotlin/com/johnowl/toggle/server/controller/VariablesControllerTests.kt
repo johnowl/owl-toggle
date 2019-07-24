@@ -40,5 +40,4 @@ class VariablesControllerTests {
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
-
 }

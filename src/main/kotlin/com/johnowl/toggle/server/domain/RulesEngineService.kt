@@ -9,5 +9,4 @@ class RulesEngineService {
     private val engine = RulesEngine()
 
     fun check(expression: String, variables: Map<String, Any>) = engine.check(expression, variables)
-
 }

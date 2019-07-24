@@ -8,11 +8,12 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.web.client.TestRestTemplate
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringRunner
 import java.util.*
-
 
 @RunWith(SpringRunner::class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -122,5 +123,89 @@ class ToggleControllerTests {
 
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo("false"))
+    }
+
+    @Test
+    fun `should return error 404 and error in body when feature toggle does not exist`() {
+        val toggleId = UUID.randomUUID().toString()
+        val expectedJson = "{\"code\":\"toggle_not_found\",\"message\":\"Feature toggle not found.\"}"
+
+        val response = testRestTemplate.getForEntity("/toggles/$toggleId", String::class.java)
+
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.NOT_FOUND))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
+
+    @Test
+    fun `should return status 200 and feature toggle in body when insert valid feature toggle`() {
+        val toggleId = UUID.randomUUID().toString()
+        val toggle = FeatureToggle(toggleId, true, "")
+        val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":true,\"rules\":\"\"}"
+
+        val response = testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
+
+    @Test
+    fun `should return status 200 and feature toggle in body when get toggle by id`() {
+        val toggleId = UUID.randomUUID().toString()
+        val toggle = FeatureToggle(toggleId, true, "")
+        val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":true,\"rules\":\"\"}"
+        testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+
+
+        val response = testRestTemplate.getForEntity("/toggles/$toggleId", String::class.java)
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
+
+    @Test
+    fun `should return status 200 and feature toggle in body when update toggle by id`() {
+        val toggleId = UUID.randomUUID().toString()
+        testRestTemplate.postForEntity("/toggles/", FeatureToggle(toggleId, false, ""), String::class.java)
+
+        val toggle = FeatureToggle(toggleId, false, "true")
+        val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":false,\"rules\":\"true\"}"
+
+        val response = testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.PUT, HttpEntity(toggle), String::class.java)
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
+
+    @Test
+    fun `should return status 200 and feature toggle list in body when get all`() {
+        val toggleId = UUID.randomUUID().toString()
+        val toggle =  FeatureToggle(toggleId, false, "true")
+        testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+        val expectedJson = "[{\"toggleId\":\"$toggleId\",\"enabled\":false,\"rules\":\"true\"}]"
+
+        val response = testRestTemplate.getForEntity("/toggles/", String::class.java)
+
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
+
+    @Test
+    fun `should return status 200 and feature toggle in body when delete toggle by id`() {
+        val toggleId = UUID.randomUUID().toString()
+        val toggle =  FeatureToggle(toggleId, false, "true")
+        testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+
+        val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":false,\"rules\":\"true\"}"
+
+        val response = testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
+
+    @Test
+    fun `should return status 404 and json error in body when try to delete non existing toggle`() {
+        val toggleId = UUID.randomUUID().toString()
+        val expectedJson = "{\"code\":\"toggle_not_found\",\"message\":\"Feature toggle not found.\"}"
+
+        val response = testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.NOT_FOUND))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
 }

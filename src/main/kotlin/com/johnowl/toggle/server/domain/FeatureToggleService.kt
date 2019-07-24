@@ -9,8 +9,12 @@ class FeatureToggleService {
     private val rulesEngineService: RulesEngineService
     private val variablesService: VariablesService
 
-    constructor(toggleRepository: ToggleRepository, rulesEngineService: RulesEngineService,
-                variablesService: VariablesService) {
+    constructor(
+        toggleRepository: ToggleRepository,
+        rulesEngineService: RulesEngineService,
+        variablesService: VariablesService
+    ) {
+
         this.toggleRepository = toggleRepository
         this.rulesEngineService = rulesEngineService
         this.variablesService = variablesService
@@ -22,7 +26,7 @@ class FeatureToggleService {
 
     fun add(featureToggle: FeatureToggle): FeatureToggle {
 
-        if(toggleRepository.getById(featureToggle.toggleId) != null) {
+        if (toggleRepository.getById(featureToggle.toggleId) != null) {
             throw FeatureToggleAlreadyExistsException()
         }
 
@@ -31,7 +35,7 @@ class FeatureToggleService {
 
     fun update(toggleId: String, featureToggle: FeatureToggle): FeatureToggle {
 
-        if(toggleRepository.getById(featureToggle.toggleId) == null) {
+        if (toggleRepository.getById(featureToggle.toggleId) == null) {
             throw FeatureToggleNotFoundException()
         }
 
@@ -52,10 +56,10 @@ class FeatureToggleService {
 
         val toggle = this.getById(toggleId)
 
-        if(!toggle.enabled)
+        if (!toggle.enabled)
             return false
 
-        if(toggle.rules.isEmpty())
+        if (toggle.rules.isEmpty())
             return toggle.enabled
 
         return rulesEngineService.check(toggle.rules, variables)
@@ -65,5 +69,4 @@ class FeatureToggleService {
         val variables = variablesService.getByUserId(userId)
         return check(toggleId, variables)
     }
-
 }

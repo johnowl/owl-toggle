@@ -24,7 +24,7 @@ class ToggleController {
             ApiResponse(code = 200, message = "Return all feature toggles or empty array.")
     )
     @GetMapping("/")
-    fun getAll() : ResponseEntity<List<FeatureToggle>> {
+    fun getAll(): ResponseEntity<List<FeatureToggle>> {
         return ResponseEntity(toggleService.getAll(), HttpStatus.OK)
     }
 
@@ -33,7 +33,7 @@ class ToggleController {
             ApiResponse(code = 404, message = "Feature toggle not found.", response = Error::class)
     )
     @GetMapping("/{toggleId}")
-    fun getById(@PathVariable("toggleId") toggleId: String) : ResponseEntity<FeatureToggle> {
+    fun getById(@PathVariable("toggleId") toggleId: String): ResponseEntity<FeatureToggle> {
         return ResponseEntity(toggleService.getById(toggleId), HttpStatus.OK)
     }
 
@@ -42,7 +42,7 @@ class ToggleController {
             ApiResponse(code = 400, message = "Feature toggle already exists.", response = Error::class)
     )
     @PostMapping("/")
-    fun add(@RequestBody featureToggle: FeatureToggle) : ResponseEntity<FeatureToggle> {
+    fun add(@RequestBody featureToggle: FeatureToggle): ResponseEntity<FeatureToggle> {
         return ResponseEntity(toggleService.add(featureToggle), HttpStatus.OK)
     }
 
@@ -51,7 +51,7 @@ class ToggleController {
             ApiResponse(code = 404, message = "Feature toggle does not exist.", response = Error::class)
     )
     @PutMapping("/{toggleId}")
-    fun update(@PathVariable("toggleId") toggleId: String, @RequestBody featureToggle: FeatureToggle) : ResponseEntity<FeatureToggle> {
+    fun update(@PathVariable("toggleId") toggleId: String, @RequestBody featureToggle: FeatureToggle): ResponseEntity<FeatureToggle> {
         return ResponseEntity(toggleService.update(toggleId, featureToggle), HttpStatus.OK)
     }
 
@@ -60,7 +60,7 @@ class ToggleController {
             ApiResponse(code = 404, message = "Feature toggle does not exist.", response = Error::class)
     )
     @DeleteMapping("/{toggleId}")
-    fun delete(@PathVariable("toggleId") toggleId: String) : ResponseEntity<FeatureToggle> {
+    fun delete(@PathVariable("toggleId") toggleId: String): ResponseEntity<FeatureToggle> {
         return ResponseEntity(toggleService.delete(toggleId), HttpStatus.OK)
     }
 
@@ -69,7 +69,7 @@ class ToggleController {
             ApiResponse(code = 404, message = "Feature toggle does not exist.", response = Error::class)
     )
     @PostMapping("/{toggleId}/check")
-    fun checkToggle(@PathVariable("toggleId") toggleId: String, @RequestBody variables: Map<String, Any>) : ResponseEntity<Boolean> {
+    fun checkToggle(@PathVariable("toggleId") toggleId: String, @RequestBody variables: Map<String, Any>): ResponseEntity<Boolean> {
         return ResponseEntity(toggleService.check(toggleId, variables), HttpStatus.OK)
     }
 
@@ -78,7 +78,7 @@ class ToggleController {
             ApiResponse(code = 404, message = "Feature toggle does not exist or variables not found.", response = Error::class)
     )
     @GetMapping("/{toggleId}/check/{userId}")
-    fun checkToggleByUserId(@PathVariable("toggleId") toggleId: String, @PathVariable("userId") userId: String) : ResponseEntity<Boolean> {
+    fun checkToggleByUserId(@PathVariable("toggleId") toggleId: String, @PathVariable("userId") userId: String): ResponseEntity<Boolean> {
         return ResponseEntity(toggleService.check(toggleId, userId), HttpStatus.OK)
     }
 }

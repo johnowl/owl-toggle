@@ -23,5 +23,4 @@ class RedisVariablesRepository : VariablesRepository {
     }
 
     override fun getByUserId(userId: String): Map<String, Any>? = operations.get(KEY, userId)
-
 }

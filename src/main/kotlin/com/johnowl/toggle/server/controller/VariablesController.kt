@@ -21,7 +21,7 @@ class VariablesController {
             ApiResponse(code = 200, message = "Variables added successfully.")
     )
     @PostMapping("/{userId}")
-    fun saveVariablesToUserId(@PathVariable("userId") userId: String, @RequestBody values: Map<String, Any>) : ResponseEntity<Map<String, Any>> {
+    fun saveVariablesToUserId(@PathVariable("userId") userId: String, @RequestBody values: Map<String, Any>): ResponseEntity<Map<String, Any>> {
         return ResponseEntity(service.add(userId, values), HttpStatus.OK)
     }
 
@@ -30,8 +30,7 @@ class VariablesController {
             ApiResponse(code = 404, message = "Variables not bound.", response = Error::class)
     )
     @GetMapping("/{userId}")
-    fun getVariablesByUserId(@PathVariable("userId") userId: String) : ResponseEntity<Map<String, Any>> {
+    fun getVariablesByUserId(@PathVariable("userId") userId: String): ResponseEntity<Map<String, Any>> {
         return ResponseEntity(service.getByUserId(userId), HttpStatus.OK)
     }
-
 }
