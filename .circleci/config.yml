@@ -25,3 +25,5 @@ jobs:
       - run: gradle dependencies
       - run: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
       - run: gradle build
+      - store_artifacts:
+          path: build/reports/jacoco
