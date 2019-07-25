@@ -153,7 +153,7 @@ class ToggleControllerTests {
     fun `should return status 200 and feature toggle in body when insert duplicated feature toggle`() {
         val toggleId = UUID.randomUUID().toString()
         val toggle = FeatureToggle(toggleId, true, "")
-        val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":true,\"rules\":\"\"}"
+        val expectedJson = "{\"code\":\"toggle_duplicated\",\"message\":\"Feature toggle already exists.\"}"
         testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
 
         val response = testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)

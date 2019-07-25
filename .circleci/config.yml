@@ -33,7 +33,7 @@ jobs:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle.kts" }}
       - run: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
-      - run: gradle build
+      - run: gradle clean build
       - store_artifacts:
           path: build/reports/jacoco/test/html/
       - codecov/upload:
