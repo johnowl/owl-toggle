@@ -1,6 +1,7 @@
 # Feature toggle service
 
-[![CircleCI](https://circleci.com/gh/johnowl/owl-toggle-server.svg?style=svg)](https://circleci.com/gh/johnowl/owl-toggle-server)
+ [![CircleCI](https://circleci.com/gh/johnowl/owl-toggle-server.svg?style=svg)](https://circleci.com/gh/johnowl/owl-toggle-server)
+ [![codecov](https://codecov.io/gh/johnowl/owl-toggle-server/branch/master/graph/badge.svg)](https://codecov.io/gh/johnowl/owl-toggle-server) 
 
 ## What is a feature toggle?
 
