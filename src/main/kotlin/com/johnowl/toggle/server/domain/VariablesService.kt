@@ -1,5 +1,6 @@
 package com.johnowl.toggle.server.domain
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
@@ -7,6 +8,7 @@ class VariablesService {
 
     val repository: VariablesRepository
 
+    @Autowired
     constructor(repository: VariablesRepository) {
         this.repository = repository
     }

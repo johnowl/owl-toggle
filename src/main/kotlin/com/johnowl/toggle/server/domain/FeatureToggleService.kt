@@ -1,5 +1,6 @@
 package com.johnowl.toggle.server.domain
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
@@ -9,6 +10,7 @@ class FeatureToggleService {
     private val rulesEngineService: RulesEngineService
     private val variablesService: VariablesService
 
+    @Autowired
     constructor(
         toggleRepository: ToggleRepository,
         rulesEngineService: RulesEngineService,
