@@ -1,5 +1,7 @@
 # Feature toggle service
 
+[![CircleCI](https://circleci.com/gh/johnowl/owl-toggle-server.svg?style=svg)](https://circleci.com/gh/johnowl/owl-toggle-server)
+
 ## What is a feature toggle?
 
 It's a way to turn on and off certains portion of your code. In real life it can be an `if` expression to check a flag, if it returns `true` you do something and if it returns `false` you do something else. This project is were you store your flags, but it's not just that, you can write complex rules based on variables that are stored here too!
