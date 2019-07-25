@@ -7,6 +7,7 @@ plugins {
     kotlin("jvm") version "1.2.71"
     kotlin("plugin.spring") version "1.2.71"
     id("org.jlleitschuh.gradle.ktlint") version "8.2.0"
+    jacoco
 }
 
 group = "com.johnowl.toggle.server"
@@ -37,5 +38,31 @@ tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
         jvmTarget = "1.8"
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+tasks {
+
+    jacocoTestReport {
+        isEnabled = true
+        reports {
+            html.isEnabled = true
+            xml.isEnabled = true
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule { limit { minimum = BigDecimal.valueOf(0.7) } }
+        }
+    }
+
+    check {
+        dependsOn(jacocoTestCoverageVerification)
+        dependsOn(jacocoTestReport)
     }
 }
