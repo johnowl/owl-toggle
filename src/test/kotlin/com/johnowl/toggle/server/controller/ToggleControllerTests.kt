@@ -34,6 +34,7 @@ class ToggleControllerTests {
 
         val response = testRestTemplate.postForEntity("/toggles/$toggleId/check", variables, String::class.java)
 
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo("true"))
     }
@@ -48,7 +49,7 @@ class ToggleControllerTests {
         val variables = mapOf("version" to 1)
 
         val response = testRestTemplate.postForEntity("/toggles/$toggleId/check", variables, String::class.java)
-
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo("false"))
     }
@@ -63,7 +64,7 @@ class ToggleControllerTests {
         val variables = mapOf("version" to 1)
 
         val response = testRestTemplate.postForEntity("/toggles/$toggleId/check", variables, String::class.java)
-
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo("false"))
     }
@@ -78,7 +79,7 @@ class ToggleControllerTests {
         val variables = mapOf("version" to 1)
 
         val response = testRestTemplate.postForEntity("/toggles/$toggleId/check", variables, String::class.java)
-
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo("true"))
     }
@@ -99,7 +100,7 @@ class ToggleControllerTests {
 
         // execute
         val response = testRestTemplate.getForEntity("/toggles/$toggleId/check/$userId", String::class.java)
-
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo("true"))
     }
@@ -120,7 +121,7 @@ class ToggleControllerTests {
 
         // execute
         val response = testRestTemplate.getForEntity("/toggles/$toggleId/check/$userId", String::class.java)
-
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo("false"))
     }
@@ -143,6 +144,7 @@ class ToggleControllerTests {
         val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":true,\"rules\":\"\"}"
 
         val response = testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
@@ -154,8 +156,8 @@ class ToggleControllerTests {
         val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":true,\"rules\":\"\"}"
         testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
 
-
         val response = testRestTemplate.getForEntity("/toggles/$toggleId", String::class.java)
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
@@ -169,6 +171,7 @@ class ToggleControllerTests {
         val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":false,\"rules\":\"true\"}"
 
         val response = testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.PUT, HttpEntity(toggle), String::class.java)
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
@@ -176,12 +179,12 @@ class ToggleControllerTests {
     @Test
     fun `should return status 200 and feature toggle list in body when get all`() {
         val toggleId = UUID.randomUUID().toString()
-        val toggle =  FeatureToggle(toggleId, false, "true")
-        testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+        val toggle = FeatureToggle(toggleId, false, "true")
         val expectedJson = "[{\"toggleId\":\"$toggleId\",\"enabled\":false,\"rules\":\"true\"}]"
+        testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
 
         val response = testRestTemplate.getForEntity("/toggles/", String::class.java)
-
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.OK))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
@@ -189,7 +192,7 @@ class ToggleControllerTests {
     @Test
     fun `should return status 200 and feature toggle in body when delete toggle by id`() {
         val toggleId = UUID.randomUUID().toString()
-        val toggle =  FeatureToggle(toggleId, false, "true")
+        val toggle = FeatureToggle(toggleId, false, "true")
         testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
 
         val expectedJson = "{\"toggleId\":\"$toggleId\",\"enabled\":false,\"rules\":\"true\"}"
