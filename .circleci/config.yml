@@ -23,8 +23,15 @@ jobs:
       TERM: dumb
 
     steps:
-      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle.kts" }}
+            - v1-dependencies-
       - run: gradle dependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: v1-dependencies-{{ checksum "build.gradle.kts" }}
       - run: echo 127.0.0.1 devhost | sudo tee -a /etc/hosts
       - run: gradle build
       - store_artifacts:
