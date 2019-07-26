@@ -1,8 +1,6 @@
 package com.johnowl.toggle.server.controller
 
-import com.johnowl.toggle.server.domain.FeatureToggleAlreadyExistsException
-import com.johnowl.toggle.server.domain.FeatureToggleNotFoundException
-import com.johnowl.toggle.server.domain.VariablesNotFoundException
+import com.johnowl.toggle.server.domain.*
 import io.swagger.annotations.ApiModel
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
@@ -40,6 +38,11 @@ class ErrorController {
                 "variables_not_found",
                 "Variables not found."),
                 HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(FeatureToggleValidationException::class)
+    fun handleError(exceptionFeature: FeatureToggleValidationException): ResponseEntity<ValidationResult> {
+        return ResponseEntity(exceptionFeature.validationResult, HttpStatus.BAD_REQUEST)
     }
 
     @ExceptionHandler(Exception::class)
