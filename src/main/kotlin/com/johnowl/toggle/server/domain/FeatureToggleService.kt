@@ -44,6 +44,11 @@ class FeatureToggleService {
 
     fun update(toggleId: String, featureToggle: FeatureToggle): FeatureToggle {
 
+        val result = toggleValidation.validate(featureToggle)
+        if (result.isNotValid()) {
+            throw FeatureToggleValidationException(result)
+        }
+
         if (toggleRepository.getById(featureToggle.toggleId) == null) {
             throw FeatureToggleNotFoundException()
         }
