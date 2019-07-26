@@ -9,17 +9,19 @@ class FeatureToggleService {
     private val toggleRepository: ToggleRepository
     private val rulesEngineService: RulesEngineService
     private val variablesService: VariablesService
+    private val toggleValidation: FeatureToggleValidation
 
     @Autowired
     constructor(
         toggleRepository: ToggleRepository,
         rulesEngineService: RulesEngineService,
-        variablesService: VariablesService
+        variablesService: VariablesService,
+        featureToggleValidation: FeatureToggleValidation
     ) {
-
         this.toggleRepository = toggleRepository
         this.rulesEngineService = rulesEngineService
         this.variablesService = variablesService
+        this.toggleValidation = featureToggleValidation
     }
 
     fun getById(toggleId: String) = toggleRepository.getById(toggleId) ?: throw FeatureToggleNotFoundException()
@@ -27,6 +29,11 @@ class FeatureToggleService {
     fun getAll() = toggleRepository.getAll()
 
     fun add(featureToggle: FeatureToggle): FeatureToggle {
+
+        val result = toggleValidation.validate(featureToggle)
+        if (result.isNotValid()) {
+            throw FeatureToggleValidationException(result)
+        }
 
         if (toggleRepository.getById(featureToggle.toggleId) != null) {
             throw FeatureToggleAlreadyExistsException()
