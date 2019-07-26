@@ -40,8 +40,8 @@ class ErrorController {
                 HttpStatus.NOT_FOUND)
     }
 
-    @ExceptionHandler(FeatureToggleValidationException::class)
-    fun handleError(exceptionFeature: FeatureToggleValidationException): ResponseEntity<ValidationResult> {
+    @ExceptionHandler(ValidationException::class)
+    fun handleError(exceptionFeature: ValidationException): ResponseEntity<ValidationResult> {
         return ResponseEntity(exceptionFeature.validationResult, HttpStatus.BAD_REQUEST)
     }
 

@@ -32,7 +32,7 @@ class FeatureToggleService {
 
         val result = toggleValidation.validate(featureToggle)
         if (result.isNotValid()) {
-            throw FeatureToggleValidationException(result)
+            throw ValidationException(result)
         }
 
         if (toggleRepository.getById(featureToggle.toggleId) != null) {
@@ -46,7 +46,7 @@ class FeatureToggleService {
 
         val result = toggleValidation.validate(featureToggle)
         if (result.isNotValid()) {
-            throw FeatureToggleValidationException(result)
+            throw ValidationException(result)
         }
 
         if (toggleRepository.getById(featureToggle.toggleId) == null) {
