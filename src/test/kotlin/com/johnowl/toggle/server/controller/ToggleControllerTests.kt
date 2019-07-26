@@ -224,4 +224,31 @@ class ToggleControllerTests {
         MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.NOT_FOUND))
         MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
     }
+
+    @Test
+    fun `should return status 400 and error message in body when try to insert feature toggle with empty toggleId`() {
+        val toggle = FeatureToggle("", true, "")
+        val expectedJson = "{\"errors\":[{\"field\":\"toggleId\",\"message\":\"Toggle id can't be blank.\"}]}"
+
+        val response = testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.BAD_REQUEST))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
+
+    @Test
+    fun `should return status 400 and error message in body when try to update feature toggle with rules size bigger than 2048`() {
+        val toggleId = UUID.randomUUID().toString()
+        val toggle = FeatureToggle(toggleId, true, "")
+        val expectedJson = "{\"errors\":[{\"field\":\"rules\",\"message\":\"Rules size can't be greater than 2048 characters.\"}]}"
+
+        val toggleUpdated = FeatureToggle(toggleId, true, "a".repeat(2050))
+
+        testRestTemplate.postForEntity("/toggles/", toggle, String::class.java)
+        val response = testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.PUT, HttpEntity(toggleUpdated), String::class.java)
+        testRestTemplate.exchange("/toggles/$toggleId", HttpMethod.DELETE, null, String::class.java)
+
+        MatcherAssert.assertThat(response.statusCode, CoreMatchers.equalTo(HttpStatus.BAD_REQUEST))
+        MatcherAssert.assertThat(response.body, CoreMatchers.equalTo(expectedJson))
+    }
 }
