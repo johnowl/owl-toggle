@@ -4,26 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
 @Service
-class FeatureToggleService {
-
-    private val toggleRepository: ToggleRepository
-    private val rulesEngineService: RulesEngineService
-    private val variablesService: VariablesService
-    private val toggleValidation: FeatureToggleValidation
-
-    @Autowired
-    constructor(
-        toggleRepository: ToggleRepository,
-        rulesEngineService: RulesEngineService,
-        variablesService: VariablesService,
-        featureToggleValidation: FeatureToggleValidation
-    ) {
-        this.toggleRepository = toggleRepository
-        this.rulesEngineService = rulesEngineService
-        this.variablesService = variablesService
-        this.toggleValidation = featureToggleValidation
-    }
-
+class FeatureToggleService(
+        private val toggleRepository: ToggleRepository,
+        private val rulesEngineService: RulesEngineService,
+        private val variablesService: VariablesService,
+        private val toggleValidation: FeatureToggleValidation
+) {
     fun getById(toggleId: String) = toggleRepository.getById(toggleId) ?: throw FeatureToggleNotFoundException()
 
     fun getAll() = toggleRepository.getAll()

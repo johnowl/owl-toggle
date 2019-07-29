@@ -11,14 +11,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/toggles")
-class ToggleController {
-
-    private val toggleService: FeatureToggleService
-
-    @Autowired
-    constructor(toggleService: FeatureToggleService) {
-        this.toggleService = toggleService
-    }
+class ToggleController(private val toggleService: FeatureToggleService) {
 
     @ApiResponses(
             ApiResponse(code = 200, message = "Return all feature toggles or empty array.")

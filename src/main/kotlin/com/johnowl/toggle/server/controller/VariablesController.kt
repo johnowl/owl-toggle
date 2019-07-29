@@ -9,13 +9,7 @@ import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/variables")
-class VariablesController {
-
-    private val service: VariablesService
-
-    constructor(service: VariablesService) {
-        this.service = service
-    }
+class VariablesController(private val service: VariablesService) {
 
     @ApiResponses(
             ApiResponse(code = 200, message = "Variables added successfully.")
