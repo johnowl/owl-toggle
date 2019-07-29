@@ -7,14 +7,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 @Profile("stage", "prod")
-class JpaToggleRepository : ToggleRepository {
-
-    private val jpaToggleRepositoryAdapter: JpaToggleRepositoryAdapter
-
-    constructor(jpaToggleRepositoryAdapter: JpaToggleRepositoryAdapter) {
-        this.jpaToggleRepositoryAdapter = jpaToggleRepositoryAdapter
-    }
-
+class JpaToggleRepository(private val jpaToggleRepositoryAdapter: JpaToggleRepositoryAdapter) : ToggleRepository {
     override fun getById(toggleId: String) = jpaToggleRepositoryAdapter.findById(toggleId).orElse(null)
     override fun add(featureToggle: FeatureToggle) = jpaToggleRepositoryAdapter.save(featureToggle)
     override fun getAll(): List<FeatureToggle> = jpaToggleRepositoryAdapter.findAll()
