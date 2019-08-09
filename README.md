@@ -5,7 +5,7 @@
 
 ## What is a feature toggle?
 
-It's a way to turn on and off certains portion of your code. In real life it can be an `if` expression to check a flag, if it returns `true` you do something and if it returns `false` you do something else. This project is were you store your flags, but it's not just that, you can write complex rules based on variables that are stored here too!
+It's a way to turn on and off certains portions of your code. In real life it can be an `if` expression to check a flag, if it returns `true` you do something and if it returns `false` you do something else. This project is were you store your flags, but it's not just that, you can write complex rules based on variables that are stored here too!
 
 ## Managing feature toggles
 
@@ -58,8 +58,8 @@ Guess what? We have some APIs to do this too!
 
 | Verb | Path | Description | 
 | --- | --- | --- |
-| POST | /toggles/{toggleId}/check | In this API you have too send the variables in the body. It will return `true` ou `false` in the response body. |
-| GET | /toggles/{toggleId}/check/{userId} | Here you need to have variables already stored. It will return `true` ou `false` in the response body. |
+| POST | /toggles/{toggleId}/check | In this API you have too send the variables in the body. It will return `true` or `false` in the response body. |
+| GET | /toggles/{toggleId}/check/{userId} | Here you need to have variables already stored. It will return `true` or `false` in the response body. |
 
 ## API Documentation
 
