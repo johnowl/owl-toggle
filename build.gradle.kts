@@ -17,6 +17,7 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 repositories {
     mavenCentral()
     maven { setUrl("https://dl.bintray.com/hotkeytlt/maven") }
+    maven { setUrl("https://dl.bintray.com/johnowl/maven") }
 }
 
 dependencies {
@@ -28,10 +29,10 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
     implementation("org.springframework.boot:spring-boot-starter-data-redis")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    compile(files("libs/owl-rules-1.1.0.jar"))
-    compile("com.github.h0tk3y.betterParse:better-parse-jvm:0.4.0-alpha-3")
-    compile("io.springfox:springfox-swagger2:2.9.2")
-    compile("io.springfox:springfox-swagger-ui:2.9.2")
+    implementation("com.johnowl:owl-rules:1.1.14")
+    implementation("com.github.h0tk3y.betterParse:better-parse-jvm:0.4.0-alpha-3")
+    implementation("io.springfox:springfox-swagger2:2.9.2")
+    implementation("io.springfox:springfox-swagger-ui:2.9.2")
 }
 
 tasks.withType<KotlinCompile> {
