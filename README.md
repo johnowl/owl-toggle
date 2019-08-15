@@ -73,3 +73,17 @@ https://app.swaggerhub.com/apis/johnowl/api-documentation/1.0
 - Make it run in your machine
 - Run all the unit tests
 - Send a pull request
+
+
+## Technology
+
+* Spring Boot Application
+* PostgresSQL to store the rules
+* Redis to store the variables
+
+How to run
+ 
+Command: `./gradlew bootRun`
+The application will start on port 8000 and it will work with an in memory database.
+If you want to use PostgresSql and Redis you need to update the application.properties file.
+
