@@ -64,3 +64,12 @@ Guess what? We have some APIs to do this too!
 ## API Documentation
 
 https://app.swaggerhub.com/apis/johnowl/api-documentation/1.0
+
+## Contribute
+
+- Create a fork of this repository
+- Code, Code, Code
+- Do not forget the unit tests!
+- Make it run in your machine
+- Run all the unit tests
+- Send a pull request
