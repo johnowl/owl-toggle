@@ -17,7 +17,7 @@ Example of a simple feature toggle to enable or disable a feature called profile
         "rules": ""
     }
 
-There is a set of APIs to manage this rules:
+There is a set of APIs to manage the feature toggles:
 
 | Verb | Path | Description | 
 | --- | --- | --- |
@@ -36,6 +36,8 @@ You can add variables to use in your rules and turn your toggles much smarter. Y
         "enabled": true,
         "rules": "Number(appVersion) > 3"
     }
+
+
 
 To store your variables, there is a API for that
 
@@ -60,6 +62,10 @@ Guess what? We have some APIs to do this too!
 | --- | --- | --- |
 | POST | /toggles/{toggleId}/check | In this API you have too send the variables in the body. It will return `true` or `false` in the response body. |
 | GET | /toggles/{toggleId}/check/{userId} | Here you need to have variables already stored. It will return `true` or `false` in the response body. |
+
+## Rules
+
+You can find more about rules in [https://github.com/johnowl/owl-rules]
 
 ## API Documentation
 
